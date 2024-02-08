@@ -12,7 +12,10 @@ import Footer from "./Components/Footer/Footer";
 import QuestinDetail from "./pages/QuestionDetail/QuestionDetail";
 import NotFound from "./Components/NotFound/Notfound";
 import ResetSent from "./ForgotPassword/ResetSent";
-import ForgotPassword from "./ForgotPassword/ForgotPassword";
+import ResetByNewPassword from "./ForgotPassword/ResetByNewPassword";
+import ResetPassword from "./ResetPassword/ResetPassword";
+
+
 
 function App() {
   const [userData, setUserData] = useContext(UserContext);
@@ -24,7 +27,7 @@ function App() {
       token = "";
     } else   {
       try{
-      const userRes = await axios.get("http://localhost:4000/api/users", {
+      const userRes = await axios.get(`${process.env.REACT_APP_base_url}/api/users`, {
         headers: { "x-auth-token": token },
       });
       // console.log(userRes);
@@ -60,8 +63,9 @@ function App() {
         <Route path="/" element={<Home logout={logout} />} />
         <Route path="/ask-question" element={<AskQuestion />} />
         <Route path="/questions/:id" element={<QuestinDetail/>} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-sent" element={<ResetSent />} />
+        <Route path="/reset-sent" element={<ResetSent/>} />
+        <Route path="/resetbynew" element={<ResetByNewPassword/>}/>
+        <Route path="/forgot-password" element={<ResetPassword/>} />
         <Route path="*" element={<NotFound />} />
 
       </Routes>

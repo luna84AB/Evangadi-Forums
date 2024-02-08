@@ -6,9 +6,10 @@ import "./Login.css";
 import { Icon } from "react-icons-kit";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
+
 const Login = () => {
-  const [userData, setUserData] = useContext(UserContext);
   const navigate = useNavigate();
+  const [userData, setUserData] = useContext(UserContext);
   const [form, setForm] = useState({});
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -17,7 +18,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const loginRes = await axios.post(
-        "http://localhost:4000/api/users/login",
+        `${process.env.REACT_APP_base_url}/api/users/login`,
         {
           email: form.email,
           password: form.password,
@@ -29,9 +30,10 @@ const Login = () => {
       });
 
       localStorage.setItem("auth-token", loginRes.data.token);
+
       navigate("/");
     } catch (err) {
-      console.log("problem", err);
+      console.log("problem", err.response.data.msg);
       alert(err.response.data.msg);
     }
   };
